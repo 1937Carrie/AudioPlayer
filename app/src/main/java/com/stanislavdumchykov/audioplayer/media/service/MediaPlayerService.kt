@@ -133,6 +133,7 @@ class MediaPlayerService : MediaBrowserServiceCompat() {
     ) {
         when (action) {
             Constants.START_MEDIA_PLAY_ACTION -> {
+                result.detach()
                 mediaPlayerNotificationManager.showNotification(exoPlayer)
             }
 

@@ -2,6 +2,7 @@ package com.stanislavdumchykov.audioplayer.ui.audio
 
 import android.support.v4.media.MediaBrowserCompat
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
@@ -23,7 +24,7 @@ class AudioViewModel @Inject constructor(
     private val repository: AudioRepository,
     serviceConnection: MediaPlayerServiceConnection,
 ) : ViewModel() {
-    var audioList = mutableListOf<Audio>()
+    var audioList = mutableStateListOf<Audio>()
     val currentPlayingAudio = serviceConnection.currentPlayingAudio
     private val isConnected = serviceConnection.isConnected
     lateinit var rootMediaId: String
@@ -32,7 +33,6 @@ class AudioViewModel @Inject constructor(
     private val playbackState = serviceConnection.playBackState
     val isAudioPlaying: Boolean
         get() = playbackState.value?.isPlaying == true
-
     private val subscriptionCallback = object : MediaBrowserCompat.SubscriptionCallback() {
         override fun onChildrenLoaded(
             parentId: String,
@@ -41,14 +41,13 @@ class AudioViewModel @Inject constructor(
             super.onChildrenLoaded(parentId, children)
         }
     }
-
     private val serviceConnection = serviceConnection.also {
-
+        updatePlayBack()
     }
+    val currentDuration:Long
+        get() = MediaPlayerService.currentDuration
 
-    val currentDuration = MediaPlayerService.currentDuration
-
-    val currentAudioProgress = mutableStateOf(0f)
+    var currentAudioProgress = mutableStateOf(0f)
 
     init {
         viewModelScope.launch {
@@ -135,9 +134,9 @@ class AudioViewModel @Inject constructor(
     override fun onCleared() {
         super.onCleared()
         serviceConnection.unSubscribe(
-            Constants.MEDIA_ROOT_ID, object : MediaBrowserCompat.SubscriptionCallback() {}
+            Constants.MEDIA_ROOT_ID,
+            object : MediaBrowserCompat.SubscriptionCallback() {}
         )
         updatePosition = false
     }
-
 }

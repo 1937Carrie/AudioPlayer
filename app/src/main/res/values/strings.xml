@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AudioPlayer</string>
+    <string name="app_name">Audio Player</string>
     <!-- Notification Channel -->
     <string name="notification_channel">Stanislav Dumchykov media player</string>
     <string name="notification_channel_description">Custom notification channel for Stanislav Dumchykov media player</string>

@@ -18,33 +18,40 @@ import javax.inject.Inject
 class MediaPlayerServiceConnection @Inject constructor(
     @ApplicationContext context: Context,
 ) {
-    private val _playBackState: MutableStateFlow<PlaybackStateCompat?> = MutableStateFlow(null)
-    val playBackState: StateFlow<PlaybackStateCompat?> = _playBackState
 
-    private val _isConnected: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val isConnected: StateFlow<Boolean> = _isConnected
+    private val _playBackState: MutableStateFlow<PlaybackStateCompat?> =
+        MutableStateFlow(null)
+    val playBackState: StateFlow<PlaybackStateCompat?>
+        get() = _playBackState
+
+    private val _isConnected: MutableStateFlow<Boolean> =
+        MutableStateFlow(false)
+    val isConnected: StateFlow<Boolean>
+        get() = _isConnected
 
     val currentPlayingAudio = mutableStateOf<Audio?>(null)
 
     lateinit var mediaControllerCompat: MediaControllerCompat
 
-    private val mediaBrowserServiceCallback = MediaBrowserConnectionCallback(context)
-
+    private val mediaBrowserServiceCallback =
+        MediaBrowserConnectionCallBack(context)
     private val mediaBrowser = MediaBrowserCompat(
         context,
         ComponentName(context, MediaPlayerService::class.java),
         mediaBrowserServiceCallback,
         null
+
     ).apply {
         connect()
     }
-
     private var audioList = listOf<Audio>()
 
-    val rootMediaId: String = mediaBrowser.root
+    val rootMediaId: String
+        get() = mediaBrowser.root
 
-    val transportControl: MediaControllerCompat.TransportControls =
-        mediaControllerCompat.transportControls
+    val transportControl: MediaControllerCompat.TransportControls
+        get() = mediaControllerCompat.transportControls
+
 
     fun playAudio(audios: List<Audio>) {
         audioList = audios
@@ -82,12 +89,17 @@ class MediaPlayerServiceConnection @Inject constructor(
     }
 
     fun refreshMediaBrowserChildren() {
-        mediaBrowser.sendCustomAction(Constants.REFRESH_MEDIA_PLAY_ACTION, null, null)
+        mediaBrowser.sendCustomAction(
+            Constants.REFRESH_MEDIA_PLAY_ACTION,
+            null,
+            null
+        )
     }
 
-    private inner class MediaBrowserConnectionCallback(
+    private inner class MediaBrowserConnectionCallBack(
         private val context: Context,
     ) : MediaBrowserCompat.ConnectionCallback() {
+
         override fun onConnected() {
             _isConnected.value = true
             mediaControllerCompat = MediaControllerCompat(
@@ -107,7 +119,9 @@ class MediaPlayerServiceConnection @Inject constructor(
         }
     }
 
+
     private inner class MediaControllerCallBack : MediaControllerCompat.Callback() {
+
         override fun onPlaybackStateChanged(state: PlaybackStateCompat?) {
             super.onPlaybackStateChanged(state)
             _playBackState.value = state
@@ -126,6 +140,7 @@ class MediaPlayerServiceConnection @Inject constructor(
             super.onSessionDestroyed()
             mediaBrowserServiceCallback.onConnectionSuspended()
         }
+
     }
 
 }
