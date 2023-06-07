@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetScaffoldDefaults
@@ -40,70 +40,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.net.toUri
 import com.stanislavdumchykov.audioplayer.data.model.Audio
-import com.stanislavdumchykov.audioplayer.ui.theme.AudioPlayerTheme
 import java.lang.StrictMath.floor
-
-private val dummyAudioList = listOf(
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Hood",
-        data = "",
-        duration = 12345,
-        title = "Android Programming"
-    ),
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Lab",
-        data = "",
-        duration = 25678,
-        title = "Android Programming"
-    ),
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Android Lab",
-        data = "",
-        duration = 8765454,
-        title = "Android Programming"
-    ),
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Kotlin Lab",
-        data = "",
-        duration = 23456,
-        title = "Android Programming"
-    ),
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Hood Lab",
-        data = "",
-        duration = 65788,
-        title = "Android Programming"
-    ),
-    Audio(
-        uri = "".toUri(),
-        displayName = "Kotlin Programming",
-        id = 0L,
-        artist = "Hood Lab",
-        data = "",
-        duration = 234567,
-        title = "Android Programming"
-    ),
-
-    )
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -135,7 +74,6 @@ fun HomeScreen(
                     onStart = { onStart.invoke(currentPlayingAudio) },
                     onNext = { onNext.invoke() }
                 )
-
             }
         },
         scaffoldState = scaffoldState,
@@ -144,32 +82,37 @@ fun HomeScreen(
         LazyColumn(
             contentPadding = PaddingValues(bottom = 56.dp)
         ) {
-            items(audioList) { audio: Audio ->
+            itemsIndexed(audioList) { index: Int, audio: Audio ->
                 AudioItem(
+                    index = index,
+                    audioListSize = audioList.size,
                     audio = audio,
                     onItemClick = { onItemClick.invoke(audio) },
                 )
             }
         }
-
     }
-
-
 }
 
 @Composable
 fun AudioItem(
+    index: Int,
+    audioListSize: Int,
     audio: Audio,
     onItemClick: (id: Long) -> Unit,
 ) {
+    val modifier = when (index) {
+        0 -> Modifier.padding(8.dp, 8.dp, 8.dp, 4.dp)
+        audioListSize - 1 -> Modifier.padding(8.dp, 4.dp, 8.dp, 8.dp)
+        else -> Modifier.padding(8.dp, 4.dp, 8.dp, 4.dp)
+    }
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
             .clickable {
                 onItemClick.invoke(audio.id)
             },
-        backgroundColor = MaterialTheme.colors.surface.copy(alpha = .5f)
+        backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(
@@ -177,7 +120,6 @@ fun AudioItem(
                     .weight(1f)
                     .padding(8.dp)
             ) {
-                Spacer(modifier = Modifier.size(4.dp))
                 Text(
                     text = audio.displayName,
                     style = MaterialTheme.typography.h6,
@@ -190,19 +132,13 @@ fun AudioItem(
                     style = MaterialTheme.typography.subtitle1,
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
-                    color = MaterialTheme.colors
-                        .onSurface
-                        .copy(alpha = .5f)
+                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
                 )
-
             }
             Text(text = timeStampToDuration(audio.duration.toLong()))
             Spacer(modifier = Modifier.size(8.dp))
         }
-
     }
-
-
 }
 
 private fun timeStampToDuration(position: Long): String {
@@ -213,7 +149,6 @@ private fun timeStampToDuration(position: Long): String {
     return if (position < 0) "--:--"
     else "%d:%02d".format(minutes, remainingSeconds)
 }
-
 
 @Composable
 fun BottomBarPlayer(
@@ -247,11 +182,7 @@ fun BottomBarPlayer(
             onValueChange = { onProgressChange.invoke(it) },
             valueRange = 0f..100f
         )
-
-
     }
-
-
 }
 
 @Composable
@@ -268,8 +199,7 @@ fun MediaPlayerController(
     ) {
         PlayerIconItem(
             icon = if (isAudioPlaying) Icons.Default.Pause
-            else Icons.Default.PlayArrow,
-            backgroundColor = MaterialTheme.colors.primary
+            else Icons.Default.PlayArrow, backgroundColor = MaterialTheme.colors.primary
         ) {
             onStart.invoke()
         }
@@ -282,10 +212,7 @@ fun MediaPlayerController(
             }
         )
     }
-
-
 }
-
 
 @Composable
 fun ArtistInfo(
@@ -300,8 +227,7 @@ fun ArtistInfo(
         PlayerIconItem(
             icon = Icons.Default.MusicNote,
             border = BorderStroke(
-                width = 1.dp,
-                color = MaterialTheme.colors.onSurface
+                width = 1.dp, color = MaterialTheme.colors.onSurface
             ),
         ) {}
         Spacer(modifier = Modifier.size(4.dp))
@@ -324,13 +250,8 @@ fun ArtistInfo(
                 maxLines = 1
             )
         }
-
-
     }
-
-
 }
-
 
 @Composable
 fun PlayerIconItem(
@@ -341,7 +262,6 @@ fun PlayerIconItem(
     color: Color = MaterialTheme.colors.onSurface,
     onClick: () -> Unit,
 ) {
-
     Surface(
         shape = CircleShape,
         border = border,
@@ -352,7 +272,6 @@ fun PlayerIconItem(
             },
         contentColor = color,
         color = backgroundColor
-
     ) {
         Box(
             modifier = Modifier.padding(4.dp),
@@ -362,47 +281,6 @@ fun PlayerIconItem(
                 imageVector = icon,
                 contentDescription = null,
             )
-
-        }
-
-
-    }
-
-
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun BottomBarPrev() {
-    AudioPlayerTheme {
-        BottomBarPlayer(
-            progress = 50f,
-            onProgressChange = {},
-            audio = dummyAudioList[0],
-            isAudioPlaying = true,
-            onStart = { /*TODO*/ }) {
-
         }
     }
-
-}
-
-@Preview(showSystemUi = true)
-@Composable
-fun HomeScreenPrev() {
-    AudioPlayerTheme {
-        HomeScreen(
-            progress = 50f,
-            onProgressChange = {},
-            isAudioPlaying = true,
-            audioList = dummyAudioList,
-            currentPlayingAudio = dummyAudioList[0],
-            onStart = {},
-            onItemClick = {}
-        ) {
-
-        }
-    }
-
 }
