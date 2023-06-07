@@ -27,7 +27,7 @@ class ContentResolverHelper @Inject constructor(
     private val selectionClause: String? = "${MediaStore.Audio.AudioColumns.IS_MUSIC} = ?"
     private var selectionArg = arrayOf("1")
 
-    private val sortOrder = "${MediaStore.Audio.AudioColumns.DISPLAY_NAME} ASC"
+    private val sortOrder = "${MediaStore.Audio.AudioColumns.ARTIST} ASC"
 
     @WorkerThread
     fun getAudioData(): List<Audio> {

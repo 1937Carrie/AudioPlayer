@@ -44,7 +44,7 @@ class AudioViewModel @Inject constructor(
     private val serviceConnection = serviceConnection.also {
         updatePlayBack()
     }
-    val currentDuration:Long
+    val currentDuration: Long
         get() = MediaPlayerService.currentDuration
 
     var currentAudioProgress = mutableStateOf(0f)
