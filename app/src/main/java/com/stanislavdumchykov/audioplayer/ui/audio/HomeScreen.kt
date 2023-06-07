@@ -2,6 +2,7 @@ package com.stanislavdumchykov.audioplayer.ui.audio
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -18,11 +19,11 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomSheetScaffold
 import androidx.compose.material.BottomSheetScaffoldDefaults
-import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Slider
+import androidx.compose.material.SliderDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -80,7 +81,8 @@ fun HomeScreen(
         sheetPeekHeight = animatedHeight
     ) {
         LazyColumn(
-            contentPadding = PaddingValues(bottom = 56.dp)
+            contentPadding = PaddingValues(bottom = 56.dp),
+            modifier = Modifier.background(Color(0xFF000000))
         ) {
             itemsIndexed(audioList) { index: Int, audio: Audio ->
                 AudioItem(
@@ -106,13 +108,12 @@ fun AudioItem(
         audioListSize - 1 -> Modifier.padding(8.dp, 4.dp, 8.dp, 8.dp)
         else -> Modifier.padding(8.dp, 4.dp, 8.dp, 4.dp)
     }
-    Card(
+    Box(
         modifier = modifier
             .fillMaxWidth()
             .clickable {
                 onItemClick.invoke(audio.id)
             },
-        backgroundColor = MaterialTheme.colors.surface.copy(alpha = 0.5f)
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(
@@ -122,6 +123,7 @@ fun AudioItem(
             ) {
                 Text(
                     text = audio.displayName,
+                    color = Color.White,
                     style = MaterialTheme.typography.h6,
                     overflow = TextOverflow.Clip,
                     maxLines = 1
@@ -132,7 +134,7 @@ fun AudioItem(
                     style = MaterialTheme.typography.subtitle1,
                     maxLines = 1,
                     overflow = TextOverflow.Clip,
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+                    color = Color(0xFFB3B3B3)
                 )
             }
             Text(text = timeStampToDuration(audio.duration.toLong()))
@@ -159,7 +161,9 @@ fun BottomBarPlayer(
     onStart: () -> Unit,
     onNext: () -> Unit,
 ) {
-    Column {
+    Column(
+        modifier = Modifier.background(Color(0xFF313131))
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -180,7 +184,12 @@ fun BottomBarPlayer(
         Slider(
             value = progress,
             onValueChange = { onProgressChange.invoke(it) },
-            valueRange = 0f..100f
+            valueRange = 0f..100f,
+            colors = SliderDefaults.colors(
+                thumbColor = Color.White,
+                activeTrackColor = Color(0xFFEEFFA0),
+                inactiveTrackColor = Color(0xFF808080)
+            )
         )
     }
 }
@@ -198,8 +207,11 @@ fun MediaPlayerController(
             .padding(4.dp)
     ) {
         PlayerIconItem(
-            icon = if (isAudioPlaying) Icons.Default.Pause
-            else Icons.Default.PlayArrow, backgroundColor = MaterialTheme.colors.primary
+            icon = if (isAudioPlaying)
+                Icons.Default.Pause
+            else
+                Icons.Default.PlayArrow,
+            backgroundColor = Color.White
         ) {
             onStart.invoke()
         }
@@ -223,16 +235,20 @@ fun ArtistInfo(
         modifier = modifier.padding(4.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-
         PlayerIconItem(
             icon = Icons.Default.MusicNote,
             border = BorderStroke(
-                width = 1.dp, color = MaterialTheme.colors.onSurface
+                width = 1.dp,
+                color = MaterialTheme.colors.onSurface
             ),
-        ) {}
+        ) {
+
+        }
         Spacer(modifier = Modifier.size(4.dp))
 
-        Column {
+        Column(
+            verticalArrangement = Arrangement.SpaceEvenly
+        ) {
             Text(
                 text = audio.title,
                 fontWeight = FontWeight.Bold,
@@ -241,7 +257,6 @@ fun ArtistInfo(
                 modifier = Modifier.weight(1f),
                 maxLines = 1
             )
-            Spacer(modifier = Modifier.size(4.dp))
             Text(
                 text = audio.artist,
                 fontWeight = FontWeight.Normal,
