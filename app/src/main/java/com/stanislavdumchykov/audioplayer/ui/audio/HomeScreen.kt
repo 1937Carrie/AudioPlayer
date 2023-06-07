@@ -122,7 +122,7 @@ fun AudioItem(
                     .padding(8.dp)
             ) {
                 Text(
-                    text = audio.displayName,
+                    text = audio.title,
                     color = Color.White,
                     style = MaterialTheme.typography.h6,
                     overflow = TextOverflow.Clip,
