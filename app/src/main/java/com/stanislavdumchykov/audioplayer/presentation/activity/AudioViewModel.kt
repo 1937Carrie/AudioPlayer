@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.ui.audio
+package com.stanislavdumchykov.audioplayer.presentation.activity
 
 import android.support.v4.media.MediaBrowserCompat
 import androidx.compose.runtime.getValue
@@ -9,11 +9,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.stanislavdumchykov.audioplayer.data.model.Audio
 import com.stanislavdumchykov.audioplayer.data.repository.AudioRepository
-import com.stanislavdumchykov.audioplayer.media.constants.Constants
-import com.stanislavdumchykov.audioplayer.media.exoplayer.MediaPlayerServiceConnection
-import com.stanislavdumchykov.audioplayer.media.exoplayer.currentPosition
-import com.stanislavdumchykov.audioplayer.media.exoplayer.isPlaying
-import com.stanislavdumchykov.audioplayer.media.service.MediaPlayerService
+import com.stanislavdumchykov.audioplayer.domain.media.constants.Constants
+import com.stanislavdumchykov.audioplayer.domain.media.exoplayer.MediaPlayerServiceConnection
+import com.stanislavdumchykov.audioplayer.domain.media.exoplayer.currentPosition
+import com.stanislavdumchykov.audioplayer.domain.media.exoplayer.isPlaying
+import com.stanislavdumchykov.audioplayer.domain.media.service.MediaPlayerService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -120,9 +120,8 @@ class AudioViewModel @Inject constructor(
             }
 
             if (currentDuration > 0) {
-                currentAudioProgress.value = (
-                        currentPlayBackPosition.toFloat() / currentDuration.toFloat() * 100f
-                        )
+                currentAudioProgress.value =
+                    currentPlayBackPosition.toFloat() / currentDuration.toFloat() * 100f
             }
             delay(Constants.PLAYBACK_UPDATE_INTERVAL)
             if (updatePosition) {

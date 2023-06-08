@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.exoplayer
+package com.stanislavdumchykov.audioplayer.domain.media.exoplayer
 
 import android.content.ComponentName
 import android.content.Context
@@ -8,8 +8,8 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.compose.runtime.mutableStateOf
 import com.stanislavdumchykov.audioplayer.data.model.Audio
-import com.stanislavdumchykov.audioplayer.media.constants.Constants
-import com.stanislavdumchykov.audioplayer.media.service.MediaPlayerService
+import com.stanislavdumchykov.audioplayer.domain.media.constants.Constants
+import com.stanislavdumchykov.audioplayer.domain.media.service.MediaPlayerService
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

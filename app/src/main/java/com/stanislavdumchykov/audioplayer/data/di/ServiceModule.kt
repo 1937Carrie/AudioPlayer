@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.di
+package com.stanislavdumchykov.audioplayer.data.di
 
 import android.content.Context
 import com.google.android.exoplayer2.C

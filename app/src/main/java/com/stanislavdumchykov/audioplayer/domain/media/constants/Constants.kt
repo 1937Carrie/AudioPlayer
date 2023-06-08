@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.constants
+package com.stanislavdumchykov.audioplayer.domain.media.constants
 
 object Constants {
     const val PLAYBACK_NOTIFICATION_CHANNEL_ID = "AUDIO_PLAYER_NOTIFICATION_CHANNEL_ID"

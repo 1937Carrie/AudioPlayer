@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.exoplayer
+package com.stanislavdumchykov.audioplayer.domain.media.exoplayer
 
 import android.support.v4.media.MediaBrowserCompat
 import android.support.v4.media.MediaBrowserCompat.MediaItem.FLAG_PLAYABLE

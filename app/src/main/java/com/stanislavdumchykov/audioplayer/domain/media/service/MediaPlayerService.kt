@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.service
+package com.stanislavdumchykov.audioplayer.domain.media.service
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -22,9 +22,9 @@ import com.google.android.exoplayer2.ext.mediasession.TimelineQueueNavigator
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.google.android.exoplayer2.upstream.cache.CacheDataSource
 import com.stanislavdumchykov.audioplayer.R
-import com.stanislavdumchykov.audioplayer.media.constants.Constants
-import com.stanislavdumchykov.audioplayer.media.exoplayer.MediaPlayerNotificationManager
-import com.stanislavdumchykov.audioplayer.media.exoplayer.MediaSource
+import com.stanislavdumchykov.audioplayer.domain.media.constants.Constants
+import com.stanislavdumchykov.audioplayer.domain.media.exoplayer.MediaPlayerNotificationManager
+import com.stanislavdumchykov.audioplayer.domain.media.exoplayer.MediaSource
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
