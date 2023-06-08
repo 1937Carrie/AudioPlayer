@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer
+package com.stanislavdumchykov.audioplayer.presentation.activity
 
 import android.Manifest
 import android.os.Build
@@ -20,8 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
-import com.stanislavdumchykov.audioplayer.ui.audio.AudioViewModel
-import com.stanislavdumchykov.audioplayer.ui.audio.HomeScreen
+import com.stanislavdumchykov.audioplayer.presentation.screen.HomeScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

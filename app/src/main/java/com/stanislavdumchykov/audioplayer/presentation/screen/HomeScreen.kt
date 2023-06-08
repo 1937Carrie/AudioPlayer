@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.ui.audio
+package com.stanislavdumchykov.audioplayer.presentation.screen
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.BorderStroke

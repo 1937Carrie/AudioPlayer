@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.exoplayer
+package com.stanislavdumchykov.audioplayer.domain.media.exoplayer
 
 import android.os.SystemClock
 import android.support.v4.media.session.PlaybackStateCompat

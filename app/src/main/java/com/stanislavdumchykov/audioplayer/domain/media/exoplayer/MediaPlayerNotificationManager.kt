@@ -1,4 +1,4 @@
-package com.stanislavdumchykov.audioplayer.media.exoplayer
+package com.stanislavdumchykov.audioplayer.domain.media.exoplayer
 
 import android.app.PendingIntent
 import android.content.Context
@@ -8,7 +8,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.ui.PlayerNotificationManager
 import com.stanislavdumchykov.audioplayer.R
-import com.stanislavdumchykov.audioplayer.media.constants.Constants
+import com.stanislavdumchykov.audioplayer.domain.media.constants.Constants
 
 internal class MediaPlayerNotificationManager(
     context: Context,
