@@ -23,7 +23,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -75,6 +75,9 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
 
     implementation "com.google.accompanist:accompanist-permissions:$accompanist_version"
+
+    // Datastore
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
 }
 
 kapt {

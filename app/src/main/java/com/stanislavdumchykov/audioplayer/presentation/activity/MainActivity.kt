@@ -88,4 +88,10 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    @Deprecated("Deprecated in Java", ReplaceWith("this.moveTaskToBack(true)"))
+    override fun onBackPressed() {
+        this.moveTaskToBack(true)
+    }
+
 }
